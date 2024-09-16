@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Division Reminder Calculator</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+<h2>Division Reminder Calculator</h2>
+
+<form id="divisionForm">
+  <label for="randomNumber">Random Number:</label>
+  <input type="number" id="randomNumber" name="randomNumber" min="1">
+  
+  <label for="surveyNumber">Highest Survey Number:</label>
+  <input type="number" id="surveyNumber" name="surveyNumber" min="1">
+  
+  <button type="button" onclick="calculateReminder()">Submit</button>
+</form>
+
+<div id="result"></div>
+<div id="reminderPrompt"></div>
+<div id="subdivisionsInput"></div>
+<div id="finalReminder"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
