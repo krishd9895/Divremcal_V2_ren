@@ -1,0 +1,49 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px; /* Adjusted padding */
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 3px; /* Decreased margin-bottom */
+}
+
+input[type="number"],
+button {
+  display: block;
+  width: calc(100% - 16px); /* Adjusted width to account for padding */
+  padding: 8px;
+  margin-bottom: 5px; /* Decreased margin-bottom */
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 45%; /* Adjusted width */
+  margin-right: 5%; /* Added margin-right for spacing */
+  margin-bottom: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#result,
+#reminderPrompt,
+#subdivisionsInput,
+#finalReminder {
+  margin-top: 10px; /* Adjusted margin-top */
+}
