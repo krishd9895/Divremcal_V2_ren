@@ -1,62 +1,75 @@
 let rejectedSurveyNumber;
-let chosenSurveyNumber;
+let ifValueChange;
 
-// Function to calculate the selected survey number based on the random number and highest survey number
-function calculateSelectedSurveyNumber() {
+function calculateReminder() {
   var randomNumber = parseInt(document.getElementById("randomNumber").value);
-  var highestSurveyNumber = parseInt(document.getElementById("highestSurveyNumber").value);
+  var surveyNumber = parseInt(document.getElementById("surveyNumber").value);
 
-  if (isNaN(randomNumber) || isNaN(highestSurveyNumber) || randomNumber === 0 || highestSurveyNumber === 0) {
+  if (isNaN(randomNumber) || isNaN(surveyNumber) || randomNumber === 0 || surveyNumber === 0) {
     alert("Please enter valid numbers greater than 0.");
     return;
   }
 
-  var selectedSurveyNumber = randomNumber % highestSurveyNumber;
+  var selectedSurveyNumber = randomNumber % surveyNumber;
 
   if (selectedSurveyNumber === 0) {
-    selectedSurveyNumber = highestSurveyNumber; // If remainder is 0, use the highest survey number
+    selectedSurveyNumber = surveyNumber; // Update to divisor itself
   }
 
-  // Initially set chosenSurveyNumber to the selectedSurveyNumber
-  chosenSurveyNumber = selectedSurveyNumber;
+  rejectedSurveyNumber = selectedSurveyNumber;
 
   document.getElementById("result").innerText = "Selected survey number: " + selectedSurveyNumber;
 
-  // Display options for rejecting or accepting the selected survey number
-  var promptMessage = 'Do you want to reject this selected survey number? ';
-  promptMessage += '<button type="button" onclick="allowManualSurveySelection(' + selectedSurveyNumber + ')">Yes</button>';
-  promptMessage += '<button type="button" onclick="proceedWithSelectedSurveyNumber()">No</button>';
+  var reminderPrompt = 'Do you want to reject selected survey number? ';
+  reminderPrompt += '<button type="button" onclick="enterReminder(' + selectedSurveyNumber + ')">Yes</button>';
+  reminderPrompt += '<button type="button" onclick="continueWithReminder(' + selectedSurveyNumber + '); removeUserReminder()">No</button>'; 
 
-  document.getElementById("prompt").innerHTML = promptMessage;
+  document.getElementById("reminderPrompt").innerHTML = reminderPrompt; 
 }
 
-// Function to allow user to manually input a survey number if they reject the selected one
-function allowManualSurveySelection(selectedSurveyNumber) {
-  rejectedSurveyNumber = selectedSurveyNumber;
+function enterReminder(actualReminder) {
+  // Check if the input box already exists
+  if (!document.getElementById("userReminderContainer")) {
+    var userReminderBox = '<div id="userReminderContainer">';
+    userReminderBox += '<br><label for="userReminder"><b>Enter your survey number choice:</b></label>';
+    userReminderBox += '<input type="number" id="userReminder" name="userReminder" min="1" max="' + actualReminder + '">';
+    userReminderBox += '<button type="button" onclick="calculateReminderWithUserChoice(' + actualReminder + ')">Submit</button>';
+    userReminderBox += '</div>';
 
-  // Check if input box already exists, to avoid duplicates
-  if (!document.getElementById("manualSurveySelectionContainer")) {
-    var inputBox = '<div id="manualSurveySelectionContainer">';
-    inputBox += '<br><label for="manualSurveyNumber"><b>Enter your survey number choice:</b></label>';
-    inputBox += '<input type="number" id="manualSurveyNumber" name="manualSurveyNumber" min="1" max="' + selectedSurveyNumber + '">';
-    inputBox += '<button type="button" onclick="calculateWithUserSurveySelection()">Submit</button>';
-    inputBox += '</div>';
-
-    document.getElementById("prompt").innerHTML += inputBox;
+    document.getElementById("reminderPrompt").innerHTML += userReminderBox;
+    ifValueChange = actualReminder;
   }
 }
 
-// Remove manual input section if the user decides not to reject
-function proceedWithSelectedSurveyNumber() {
-  var subdivisionInput = '<label for="subdivisions">Number of Subdivisions:</label>';
-  subdivisionInput += '<input type="number" id="subdivisions" name="subdivisions" min="1">';
-  subdivisionInput += '<button type="button" onclick="calculateSelectedSubdivision()">Calculate Subdivision</button>';
-
-  document.getElementById("subdivisionInput").innerHTML = subdivisionInput;
+function removeUserReminder() {
+  var userReminderContainer = document.getElementById("userReminderContainer");
+  if (userReminderContainer) {
+    userReminderContainer.remove();
+  }
 }
 
-// Function to calculate subdivision based on the chosen survey number
-function calculateSelectedSubdivision() {
+function continueWithReminder(reminder) {
+  var subdivisionsInput = '<label for="subdivisions">Number of Subdivisions:</label>';
+  subdivisionsInput += '<input type="number" id="subdivisions" name="subdivisions" min="1">';
+  subdivisionsInput += '<button type="button" onclick="calculateFinalReminder(' + reminder + '); finalRefresh()">Calculate selected subdivision</button>';
+
+  document.getElementById("subdivisionsInput").innerHTML = subdivisionsInput;
+}
+
+function calculateReminderWithUserChoice(maxReminder) {
+  var surveyNumber = parseInt(document.getElementById("surveyNumber").value); // Parse survey number value
+
+  var userReminder = parseInt(document.getElementById("userReminder").value);
+
+  if (isNaN(userReminder) || userReminder <= 0 || userReminder > surveyNumber) {
+    alert("Please enter a valid survey number greater than 0 and not exceeding the Highest Survey Number.");
+    return;
+  }
+
+  continueWithReminder(userReminder);
+}
+
+function calculateFinalReminder(reminder) {
   var subdivisions = parseInt(document.getElementById("subdivisions").value);
 
   if (isNaN(subdivisions) || subdivisions <= 0) {
@@ -64,40 +77,28 @@ function calculateSelectedSubdivision() {
     return;
   }
 
-  var selectedSubdivisionNumber = chosenSurveyNumber % subdivisions;
+  var selectedSubdivisionNumber = reminder % subdivisions;
 
   if (selectedSubdivisionNumber === 0) {
-    selectedSubdivisionNumber = subdivisions; // If remainder is 0, use subdivisions itself
+    selectedSubdivisionNumber = subdivisions; // Update to divisor itself
   }
 
-  document.getElementById("finalResult").innerHTML = '<h3>Final Result</h3>';
-
-  if (rejectedSurveyNumber && rejectedSurveyNumber !== chosenSurveyNumber) {
-    document.getElementById("finalResult").innerHTML += '<b>Rejected selected survey number:</b> ' + rejectedSurveyNumber + '<br>';
+  document.getElementById("finalReminder").innerHTML = '<h3>Output:</h3>';
+  if (ifValueChange) {
+    var actualReminder = parseInt(document.getElementById("userReminder").value);
+    document.getElementById("finalReminder").innerHTML += '<b>Rejected survey number:</b> ' + rejectedSurveyNumber + '<br>';
+    document.getElementById("finalReminder").innerHTML += '<b>Survey number chosen:</b> ' + actualReminder + '<br>';
+  } else {
+    document.getElementById("finalReminder").innerHTML += '<b>Survey number chosen:</b> ' + rejectedSurveyNumber + '<br>';
   }
-
-  document.getElementById("finalResult").innerHTML += '<b>Survey number chosen:</b> ' + chosenSurveyNumber + '<br>';
-  document.getElementById("finalResult").innerHTML += '<b>Selected subdivision number:</b> ' + selectedSubdivisionNumber;
+  document.getElementById("finalReminder").innerHTML += '<b>Selected subdivision number:</b> ' + selectedSubdivisionNumber;
 }
 
-// Function to handle the user's manual survey number input
-function calculateWithUserSurveySelection() {
-  var highestSurveyNumber = parseInt(document.getElementById("highestSurveyNumber").value);
-  var manualSurveyNumber = parseInt(document.getElementById("manualSurveyNumber").value);
-
-  if (isNaN(manualSurveyNumber) || manualSurveyNumber <= 0 || manualSurveyNumber > highestSurveyNumber) {
-    alert("Please enter a valid survey number greater than 0 and not exceeding the highest survey number.");
-    return;
-  }
-
-  // Update chosenSurveyNumber to the user’s manually entered survey number
-  chosenSurveyNumber = manualSurveyNumber;
-
-  // Proceed with the user’s chosen survey number
-  proceedWithSelectedSurveyNumber();
+function finalRefresh() {
+  var clearButton = '<button type="button" onclick="clearForm()">Refresh Page</button>';
+  document.getElementById("finalRefresh").innerHTML = clearButton;
 }
 
-// Function to clear the form and reload the page
 function clearForm() {
   location.reload();
 }
