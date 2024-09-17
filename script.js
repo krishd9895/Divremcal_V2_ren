@@ -1,3 +1,6 @@
+let rejectedSurveyNumber;
+let ifValueChange;
+
 function calculateReminder() {
   var randomNumber = parseInt(document.getElementById("randomNumber").value);
   var surveyNumber = parseInt(document.getElementById("surveyNumber").value);
@@ -13,6 +16,8 @@ function calculateReminder() {
     selectedSurveyNumber = surveyNumber; // Update to divisor itself
   }
 
+  rejectedSurveyNumber = selectedSurveyNumber;
+
   document.getElementById("result").innerText = "Selected survey number: " + selectedSurveyNumber;
 
   var reminderPrompt = 'Do you want to reject selected survey number? ';
@@ -26,12 +31,13 @@ function enterReminder(actualReminder) {
   // Check if the input box already exists
   if (!document.getElementById("userReminderContainer")) {
     var userReminderBox = '<div id="userReminderContainer">';
-    userReminderBox += '<br><label for="userReminder"><b>Enter your survey number choice:<b></label>';
+    userReminderBox += '<br><label for="userReminder"><b>Enter your survey number choice:</b></label>';
     userReminderBox += '<input type="number" id="userReminder" name="userReminder" min="1" max="' + actualReminder + '">';
     userReminderBox += '<button type="button" onclick="calculateReminderWithUserChoice(' + actualReminder + ')">Submit</button>';
     userReminderBox += '</div>';
 
     document.getElementById("reminderPrompt").innerHTML += userReminderBox;
+    ifValueChange = actualReminder;
   }
 }
 
@@ -45,7 +51,7 @@ function removeUserReminder() {
 function continueWithReminder(reminder) {
   var subdivisionsInput = '<label for="subdivisions">Number of Subdivisions:</label>';
   subdivisionsInput += '<input type="number" id="subdivisions" name="subdivisions" min="1">';
-  subdivisionsInput += '<button type="button" onclick="calculateFinalReminder(' + reminder + ')">Calculate selected subdivision</button>';
+  subdivisionsInput += '<button type="button" onclick="calculateFinalReminder(' + reminder + '); finalRefresh()">Calculate selected subdivision</button>';
 
   document.getElementById("subdivisionsInput").innerHTML = subdivisionsInput;
 }
@@ -77,12 +83,21 @@ function calculateFinalReminder(reminder) {
     selectedSubdivisionNumber = subdivisions; // Update to divisor itself
   }
 
-  document.getElementById("finalReminder").innerHTML = '<b>Selected subdivision number:</b> ' + selectedSubdivisionNumber;
-
-  var clearButton = '<button type="button" onclick="clearForm()">Refresh Page</button>';
-  document.getElementById("finalReminder").innerHTML += clearButton;
+  document.getElementById("finalReminder").innerHTML = '<h3>****</h3>';
+  if (ifValueChange) {
+    var actualReminder = parseInt(document.getElementById("userReminder").value);
+    document.getElementById("finalReminder").innerHTML += '<b>Rejected survey number:</b> ' + rejectedSurveyNumber + '<br>';
+    document.getElementById("finalReminder").innerHTML += '<b>Survey number chosen:</b> ' + actualReminder + '<br>';
+  } else {
+    document.getElementById("finalReminder").innerHTML += '<b>Survey number chosen:</b> ' + rejectedSurveyNumber + '<br>';
+  }
+  document.getElementById("finalReminder").innerHTML += '<b>Selected subdivision number:</b> ' + selectedSubdivisionNumber;
 }
 
+function finalRefresh() {
+  var clearButton = '<button type="button" onclick="clearForm()">Refresh Page</button>';
+  document.getElementById("finalRefresh").innerHTML = clearButton;
+}
 
 function clearForm() {
   location.reload();
