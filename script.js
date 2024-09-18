@@ -83,13 +83,13 @@ function calculateFinalReminder(reminder) {
     selectedSubdivisionNumber = subdivisions; // Update to divisor itself
   }
 
-  document.getElementById("finalReminder").innerHTML = '<h3>Output:</h3>';
+  document.getElementById("finalReminder").innerHTML = '<h3>Output Menu:</h3>';
   if (ifValueChange) {
     var actualReminder = parseInt(document.getElementById("userReminder").value);
     document.getElementById("finalReminder").innerHTML += '<b>Rejected survey number:</b> ' + rejectedSurveyNumber + '<br>';
     document.getElementById("finalReminder").innerHTML += '<b>Survey number chosen:</b> ' + actualReminder + '<br>';
   } else {
-    document.getElementById("finalReminder").innerHTML += '<b>Survey number chosen:</b> ' + rejectedSurveyNumber + '<br>';
+    document.getElementById("finalReminder").innerHTML += '<b>Selected survey number:</b> ' + rejectedSurveyNumber + '<br>';
   }
   document.getElementById("finalReminder").innerHTML += '<b>Selected subdivision number:</b> ' + selectedSubdivisionNumber;
 }
