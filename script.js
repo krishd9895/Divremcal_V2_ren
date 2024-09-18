@@ -83,7 +83,7 @@ function calculateFinalReminder(reminder) {
     selectedSubdivisionNumber = subdivisions; // Update to divisor itself
   }
 
-  document.getElementById("finalReminder").innerHTML = '<h3>Output Menu:</h3>';
+  document.getElementById("finalReminder").innerHTML = '<h3>Results:</h3>';
   if (ifValueChange) {
     var actualReminder = parseInt(document.getElementById("userReminder").value);
     document.getElementById("finalReminder").innerHTML += '<b>Rejected survey number:</b> ' + rejectedSurveyNumber + '<br>';
