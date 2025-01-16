@@ -80,19 +80,22 @@ function calculateFinalReminder(reminder) {
   var selectedSubdivisionNumber = reminder % subdivisions;
 
   if (selectedSubdivisionNumber === 0) {
-    selectedSubdivisionNumber = subdivisions; // Update to divisor itself
+    selectedSubdivisionNumber = subdivisions;
   }
 
   document.getElementById("finalReminder").innerHTML = '<h3>Results:</h3>';
   if (ifValueChange) {
     var actualReminder = parseInt(document.getElementById("userReminder").value);
+    // Strike through only the rejected number
     document.getElementById("finalReminder").innerHTML += '<b>Rejected survey number:</b> <s>' + rejectedSurveyNumber + '</s><br>';
     document.getElementById("finalReminder").innerHTML += '<b>Survey number chosen:</b> ' + actualReminder + '<br>';
   } else {
-    document.getElementById("finalReminder").innerHTML += '<b>Selected survey number:</b> <s>' + rejectedSurveyNumber + '</s><br>';
+    // No strikethrough when there's no rejection
+    document.getElementById("finalReminder").innerHTML += '<b>Selected survey number:</b> ' + rejectedSurveyNumber + '<br>';
   }
   document.getElementById("finalReminder").innerHTML += '<b>Selected subdivision number:</b> ' + selectedSubdivisionNumber;
 }
+
 
 function finalRefresh() {
   var clearButton = '<button type="button" onclick="clearForm()">Refresh Page</button>';
