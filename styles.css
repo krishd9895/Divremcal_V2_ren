@@ -6,17 +6,15 @@ body {
 }
 
 .container {
-  max-width: 600px;  /* Reduced from 800px for better readability */
+  max-width: 800px;
   margin: 0 auto;
   background-color: white;
-  padding: 30px;
+  padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 25px;
 }
 
 form {
@@ -26,29 +24,25 @@ form {
 
 label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
-input[type="number"] {
+input[type="number"],
+button {
+  display: block;
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   box-sizing: border-box;
-  border: 1px solid #ddd;
-  border-radius: 4px;
 }
 
 button {
-  width: auto;  /* Changed from 100% to auto */
-  min-width: 120px;  /* Added minimum width for buttons */
-  padding: 10px 20px;
-  margin-bottom: 10px;
-  margin-right: 10px;  /* Added consistent margin */
   background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+  margin-right: 5%;
+  margin-bottom: 10px;
   transition: background-color 0.3s ease;
 }
 
@@ -56,39 +50,27 @@ button:hover {
   background-color: #0056b3;
 }
 
+button.full-width {
+  width: 100%; /* Full-width for submit buttons */
+}
+
 #result, 
 #reminderPrompt, 
 #subdivisionsInput, 
 #finalReminder {
   margin-top: 20px;
-  padding: 15px;
+  padding: 10px;
   background-color: #e9ecef;
   border-radius: 5px;
 }
 
-/* Desktop adjustments */
 @media (min-width: 768px) {
-  input[type="number"] {
-    max-width: 300px;  /* Limit input width on desktop */
-  }
-
-  #userReminderContainer {
+  .form-group {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    justify-content: space-between;
   }
 
-  #userReminderContainer input {
-    margin-bottom: 0;
-  }
-
-  #subdivisionsInput {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  #subdivisionsInput input {
-    margin-bottom: 0;
+  button {
+    width: 48%; /* For side-by-side buttons */
   }
 }
