@@ -3,44 +3,35 @@ body {
   margin: 0;
   padding: 20px;
   background-color: #f5f5f5;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
 }
 
 .container {
-  width: 100%;
-  max-width: 800px;
+  max-width: 600px;  /* Reduced from 800px for better readability */
+  margin: 0 auto;
   background-color: white;
   padding: 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin: 0 20px;
+  border-radius: 5px;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 form {
-  width: 100%;
-  margin: 0 auto;
-}
-
-.form-group {
-  margin-bottom: 20px;
+  max-width: 100%;
+  margin: 20px auto;
 }
 
 label {
   display: block;
   margin-bottom: 8px;
-  font-weight: 500;
 }
 
 input[type="number"] {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   margin-bottom: 15px;
   box-sizing: border-box;
   border: 1px solid #ddd;
@@ -48,8 +39,11 @@ input[type="number"] {
 }
 
 button {
-  padding: 12px 20px;
-  margin-bottom: 15px;
+  width: auto;  /* Changed from 100% to auto */
+  min-width: 120px;  /* Added minimum width for buttons */
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  margin-right: 10px;  /* Added consistent margin */
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -66,58 +60,35 @@ button:hover {
 #reminderPrompt, 
 #subdivisionsInput, 
 #finalReminder {
-  margin-top: 25px;
+  margin-top: 20px;
   padding: 15px;
   background-color: #e9ecef;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
-/* Desktop Styles */
+/* Desktop adjustments */
 @media (min-width: 768px) {
-  .button-group {
-    display: flex;
-    gap: 15px;
-    justify-content: space-between;
-  }
-
-  .button-group button {
-    flex: 1;
-    margin: 0;
-  }
-
   input[type="number"] {
-    max-width: 400px;
+    max-width: 300px;  /* Limit input width on desktop */
   }
 
   #userReminderContainer {
     display: flex;
-    gap: 15px;
-    align-items: flex-start;
+    align-items: center;
+    gap: 10px;
   }
 
   #userReminderContainer input {
-    flex: 1;
     margin-bottom: 0;
-  }
-
-  #userReminderContainer button {
-    width: auto;
-    white-space: nowrap;
   }
 
   #subdivisionsInput {
     display: flex;
-    gap: 15px;
     align-items: center;
+    gap: 10px;
   }
 
   #subdivisionsInput input {
-    flex: 1;
     margin-bottom: 0;
-  }
-
-  #subdivisionsInput button {
-    width: auto;
-    white-space: nowrap;
   }
 }
