@@ -86,10 +86,10 @@ function calculateFinalReminder(reminder) {
   document.getElementById("finalReminder").innerHTML = '<h3>Results:</h3>';
   if (ifValueChange) {
     var actualReminder = parseInt(document.getElementById("userReminder").value);
-    document.getElementById("finalReminder").innerHTML += '<b>Rejected survey number:</b> ' + rejectedSurveyNumber + '<br>';
+    document.getElementById("finalReminder").innerHTML += '<b>Rejected survey number:</b> <s>' + rejectedSurveyNumber + '</s><br>';
     document.getElementById("finalReminder").innerHTML += '<b>Survey number chosen:</b> ' + actualReminder + '<br>';
   } else {
-    document.getElementById("finalReminder").innerHTML += '<b>Selected survey number:</b> ' + rejectedSurveyNumber + '<br>';
+    document.getElementById("finalReminder").innerHTML += '<b>Selected survey number:</b> <s>' + rejectedSurveyNumber + '</s><br>';
   }
   document.getElementById("finalReminder").innerHTML += '<b>Selected subdivision number:</b> ' + selectedSubdivisionNumber;
 }
